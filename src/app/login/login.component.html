@@ -1,0 +1,79 @@
+<!-- example for column wise arrangement using fxlayout -->
+<div class="loginPage" fxFlexFill>
+    <!-- reference for fx layout -->
+    <!-- https://github.com/angular/flex-layout/wiki/fxLayoutGap-API -->
+    <!-- example for row wise fx -->
+    <mat-card class="loginCardSize" fxLayout="column" [ngSwitch]="view">
+        <!-- Top Toolbar -->
+        <mat-toolbar class="layout" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
+            <div fxLayoutAlign="center" fxFlex="10%"></div>
+            <div fxLayoutAlign="center center" fxFlex="80%" class="header"> WebApp-UI</div>
+            <div *ngIf="view=='login'; else notShow" fxLayoutAlign="right" fxFlex="10%"><button (click)="signUp()" mat-button>User Registration</button></div>
+            <ng-template #notShow>
+                <div fxLayoutAlign="center" fxFlex="10%"><button (click)="login()" mat-button>Login</button></div>
+            </ng-template>
+        </mat-toolbar>
+        <!-- Register Div -->
+        <div class="register" *ngSwitchCase="'signUp'" fxLayoutAlign="center center">
+            <form [formGroup]="registerForm" (ngSubmit)="register()">
+                <div fxLayoutAlign="center">
+                    <mat-card-title> Register</mat-card-title>
+                </div>
+                <div fxLayoutAlign="center">
+                    <mat-form-field>
+                        <input type="text" formControlName="firstName" matInput placeholder="First Name">
+                        <mat-error *ngIf="rf.firstName.invalid">{{getRegisterErrorMessage('firstName')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxLayoutAlign="center">
+                    <mat-form-field>
+                        <input type="text" formControlName="lastName" matInput placeholder="Last Name">
+                        <mat-error *ngIf="rf.lastName.invalid">{{getRegisterErrorMessage('lastName')}}</mat-error>
+                    </mat-form-field>
+                </div>
+               
+                <div fxLayoutAlign="center">
+                    <mat-form-field>
+                        <input type="text" formControlName="userName" matInput placeholder="Email ID">
+                        <mat-error *ngIf="rf.userName.invalid">{{getRegisterErrorMessage('userName')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxLayoutAlign="center">
+                    <mat-form-field>
+                        <input type="password" formControlName="userPassword" matInput placeholder="Password">
+                        <mat-error *ngIf="rf.userPassword.invalid">{{getRegisterErrorMessage('userPassword')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxLayoutAlign="center">
+                    <mat-form-field>
+                        <input type="password" formControlName="confirmPassword" matInput placeholder="Re-Enter Password">
+                        <mat-error *ngIf="rf.confirmPassword.invalid">{{getRegisterErrorMessage('confirmPassword')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxLayoutAlign="center"><button type="submit" mat-button>Sign Up</button></div>
+            </form>
+        </div>
+        
+        <!-- Login Div -->
+        <div *ngSwitchDefault class="login">
+            <form [formGroup]="loginForm" (ngSubmit)="authenticate()">
+                <div fxLayoutAlign="center">
+                    <mat-card-title> Login</mat-card-title>
+                </div>
+                <div fxLayoutAlign="center">
+                    <mat-form-field>
+                        <input type="text" formControlName="userName" matInput placeholder="Email ID">
+                        <mat-error *ngIf="lf.userName.invalid">{{getLoginErrorMessage('userName')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxLayoutAlign="center">
+                    <mat-form-field>
+                        <input type="password" formControlName="userPassword" matInput placeholder="Password">
+                        <mat-error *ngIf="lf.userPassword.invalid">{{getLoginErrorMessage('userPassword')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxLayoutAlign="center"><button type="submit" mat-button>Sign In</button></div>
+            </form>
+        </div>
+    </mat-card>
+</div>
