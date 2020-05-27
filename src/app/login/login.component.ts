@@ -4,7 +4,7 @@ import { AppServiceService } from '../app-service.service';
 import { IResponse, Iuser } from '../interface/IResponse';
 import { FormBuilder, FormGroup, FormControl, Validators, PatternValidator } from '@angular/forms';
 import { EncryptServiceService } from '../../app/encrypt-service.service';
-import { UserServiceService } from '../user-service.service';
+//import { UserServiceService } from '../user-service.service';
 //import { userResponse } from '../interface/IResponse'
 import { MustMatch } from '../../app/helpers/must-match.validator';
 
@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private appservice: AppServiceService,
     private EncrDecr: EncryptServiceService,
-    private user: UserServiceService,
     private formBuilder: FormBuilder
     ) { }
 
@@ -65,16 +64,13 @@ export class LoginComponent implements OnInit {
     if(this.loginForm.valid){
     const val = this.appservice.post<IResponse>('US-AUT', body).subscribe(x => {
       if (x != null) {
-        sessionStorage.setItem("auth", (x.user));
-        
+        sessionStorage.setItem("auth", JSON.stringify(x.user));
         sessionStorage.setItem("jwt_token",x.jwt.token);
-        alert("hI")
+        this._routes.navigate(['/layout'])
       } else {
-        alert ("email is invalid");
+        alert ("Email or Password is invalid, Please try again");
 
         };
-        
-        
     });
   }
 }
@@ -114,12 +110,16 @@ export class LoginComponent implements OnInit {
     // Register Body Post
     if(this.registerForm.valid){
         this.appservice.post<Iuser>('US-SIGN', body).subscribe(y => {
-          //  console.log("Posted User");
-          
-          this._routes.navigate(['/login']); }
-        
-        )}else{
-          alert("Invalid signup!Please try again!");
+          if(y!=null){
+          alert("SignUp successfull!,Please login now");
+          this._routes.navigate(['/login']); 
+        }
+          else{
+            alert("User already exists! Please signin instead!")
+          }}
+        )}
+         else{
+          alert("Invalid Signup!Please check the entered inputs!");
         }}
 
 

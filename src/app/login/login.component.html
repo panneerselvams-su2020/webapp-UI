@@ -8,7 +8,7 @@
         <mat-toolbar class="layout" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
             <div fxLayoutAlign="center" fxFlex="10%"></div>
             <div fxLayoutAlign="center center" fxFlex="80%" class="header"> WebApp-UI</div>
-            <div *ngIf="view=='login'; else notShow" fxLayoutAlign="right" fxFlex="10%"><button (click)="signUp()" mat-button>User Registration</button></div>
+            <div *ngIf="view=='login'; else notShow" fxLayoutAlign="right" fxFlex="10%"><button (click)="signUp()" mat-button>SignUp</button></div>
             <ng-template #notShow>
                 <div fxLayoutAlign="center" fxFlex="10%"><button (click)="login()" mat-button>Login</button></div>
             </ng-template>
@@ -17,7 +17,7 @@
         <div class="register" *ngSwitchCase="'signUp'" fxLayoutAlign="center center">
             <form [formGroup]="registerForm" (ngSubmit)="register()">
                 <div fxLayoutAlign="center">
-                    <mat-card-title> Register</mat-card-title>
+                    <mat-card-title> SignUp</mat-card-title>
                 </div>
                 <div fxLayoutAlign="center">
                     <mat-form-field>
@@ -50,7 +50,7 @@
                         <mat-error *ngIf="rf.confirmPassword.invalid">{{getRegisterErrorMessage('confirmPassword')}}</mat-error>
                     </mat-form-field>
                 </div>
-                <div fxLayoutAlign="center"><button type="submit" mat-button>Sign Up</button></div>
+                <div fxLayoutAlign="center"><button type="submit" mat-button>Register</button></div>
             </form>
         </div>
         

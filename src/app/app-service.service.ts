@@ -57,9 +57,9 @@ export class APIInterceptorService implements HttpInterceptor {
    intercept(req: HttpRequest<any>, next: HttpHandler):   Observable<HttpEvent<any>> {
        // All HTTP requests are going to go through this method
        let newHeaders = req.headers;
-       let t: IResponse = JSON.parse(sessionStorage.getItem('jwt_token'));
+       let t = sessionStorage.getItem('jwt_token');
        if (t != null && req.url.includes("localhost")) {
-             req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + t.token ) });
+             req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + t ) });
        }
       return next.handle(req);
   }

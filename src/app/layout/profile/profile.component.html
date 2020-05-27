@@ -1,0 +1,70 @@
+<app-navbar [title]="title" [leftBtn]="leftBtn" [rightBtn]="rightBtn" [btnDisabled]="btnDisabled"
+    (eventEmit)="outputemitted($event)">
+</app-navbar>
+<br>
+<!-- Update Profile details form -->
+<form [formGroup]="updateForm" *ngIf="switch == false" fxLayout="column" class="flexColumn"
+    enctype="multipart/form-data" (ngSubmit)="updateUser()">
+    <div class=matFormField>
+         <!-- First Name form field -->
+        <div fxLayout="column" class="formStart">
+            <div >
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="text" matInput (input)="onClick($event)" formControlName="firstName"
+                        placeholder="First Name" required>
+                    <mat-error *ngIf="rf.firstName.invalid">{{getUpdateErrorMessage('firstName')}}</mat-error>
+                </mat-form-field>
+            </div>
+        <!-- Last Name form field -->
+            <div >
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="text" matInput (input)="onClick($event)" formControlName="lastName"
+                        placeholder="Last Name" required>
+                    <mat-error *ngIf="rf.lastName.invalid">{{getUpdateErrorMessage('lastName')}}</mat-error>
+                </mat-form-field>
+            </div>
+        <!-- Email form field -->
+            <div>
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="text" readonly matInput formControlName="email" placeholder="Email">
+                </mat-form-field>
+            </div>
+            <div fxLayoutAlign="center" class="button">
+                <button mat-button> Submit </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form [formGroup]="updatePasswordForm" *ngIf="switch == true" fxLayout="column" class="flexColumn" (ngSubmit)="updateUserPassword()">
+    <div class=matFormField>
+         <!-- First Name form field -->
+        <div fxLayout="column" class="formStart">
+            <div >
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="password" matInput formControlName="oldPassword" placeholder="Enter old Password">
+                </mat-form-field>
+            </div>
+        <!-- Last Name form field -->
+            <div >
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="password" matInput (input)="onClick($event)" formControlName="newPassword"
+                        placeholder="New Password">
+                    <mat-error *ngIf="vf.newPassword.invalid">{{getUpdateErrorMessage('newPassword')}}</mat-error>
+                </mat-form-field>
+            </div>
+        <!-- Email form field -->
+            <div>
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="password" matInput (input)="onClick($event)" formControlName="confirmPassword"
+                        placeholder="Re-enter New Password">
+                    <mat-error *ngIf="vf.confirmPassword.invalid">{{getUpdateErrorMessage('confirmPassword')}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayoutAlign="center" class="button">
+                <button (click)= "passwordUpdate()" mat-button> Submit </button>
+            </div>
+        </div>
+    </div>
+</form>
