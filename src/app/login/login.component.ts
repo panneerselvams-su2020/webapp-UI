@@ -35,8 +35,8 @@ export class LoginComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    sessionStorage.removeItem('jwt_token');
-    sessionStorage.removeItem('auth');
+    localStorage.removeItem('jwt_token');
+    localStorage.removeItem('auth');
     this.urlReader();
     this.submitted=false;
   
@@ -64,8 +64,8 @@ export class LoginComponent implements OnInit {
     if(this.loginForm.valid){
     const val = this.appservice.post<IResponse>('US-AUT', body).subscribe(x => {
       if (x != null) {
-        sessionStorage.setItem("auth", JSON.stringify(x.user));
-        sessionStorage.setItem("jwt_token",x.jwt.token);
+        localStorage.setItem("auth", JSON.stringify(x.user));
+        localStorage.setItem("jwt_token",x.jwt.token);
         this._routes.navigate(['/layout'])
       } else {
         alert ("Email or Password is invalid, Please try again");

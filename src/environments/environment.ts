@@ -10,8 +10,9 @@ export const environment = {
     {code:"US-AUT",url:"authenticate"},
     {code:"US-SIGN",url:"signup"},
     //update
-    {code:"US-UPD",url:"update"}]
-
+    {code:"US-UPD",url:"update"},
+    //update User Password
+  {code:"US-UUPD",url:"updatePassword"}]
 };
 
 /*

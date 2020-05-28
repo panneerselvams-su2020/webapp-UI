@@ -34,8 +34,8 @@ export class LayoutComponent implements OnInit {
   getURL(param : any):void{
     this.opened = ! this.opened;
     if(param.route == "logout"){
-      sessionStorage.removeItem('jwt_token');
-      sessionStorage.removeItem('auth');
+      localStorage.removeItem('jwt_token');
+      localStorage.removeItem('auth');
       this._routes.navigate(['/login']);
     }else{
       this._routes.navigate(["/layout/" + param.route]);

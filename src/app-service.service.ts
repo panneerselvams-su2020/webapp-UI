@@ -34,7 +34,7 @@ export class AppServiceService {
   
   put<T>(url: string, body: any, param?:any[]) : Observable<any> {
    
-    let mie =  sessionStorage.getItem("jwt_token");
+    let mie =  localStorage.getItem("jwt_token");
     let bear = 'Bearer '+ mie
     const httpOptions = {
         headers: new HttpHeaders().set('Authorization', bear)
