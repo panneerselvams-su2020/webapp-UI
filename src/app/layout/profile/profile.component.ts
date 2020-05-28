@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
         
 
       this.user=JSON.parse(localStorage.getItem("auth"));
-    
+
     this.updateForm = this.fb.group({
       
       firstName: [this.user.firstName, [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],

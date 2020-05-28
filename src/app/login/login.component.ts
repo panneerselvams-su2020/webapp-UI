@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit {
   urlReader() {
     this.route.url.subscribe(params => {
       this.view=params[0].path;
-      
+
     })
   }
 
@@ -107,7 +107,7 @@ export class LoginComponent implements OnInit {
       firstName: this.registerForm.get('firstName').value,
       lastName: this.registerForm.get('lastName').value
     };
-    
+
     // Register Body Post
     if(this.registerForm.valid){
         this.appservice.post<Iuser>('US-SIGN', body).subscribe(y => {
