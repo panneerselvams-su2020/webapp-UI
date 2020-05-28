@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   submitted:boolean;
   mail: String;
   radioFilter:String;
+  //passwordPattern: string | RegExp;
 
   constructor(private _routes: Router,
     private route: ActivatedRoute,
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
     userName: ['', [Validators.required, Validators.email]],
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
-    userPassword: ['', [Validators.required, Validators.minLength(8)]],
+    userPassword: ['', [Validators.required, Validators.minLength(8),Validators.pattern('^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\\D*\\d)[A-Za-z\\d!$%@#£€*?&]{8,}$')]],
     confirmPassword: ['', Validators.required]
     }, {
     validator: MustMatch('userPassword', 'confirmPassword')
@@ -66,7 +67,7 @@ export class LoginComponent implements OnInit {
       if (x != null) {
         localStorage.setItem("auth", JSON.stringify(x.user));
         localStorage.setItem("jwt_token",x.jwt.token);
-        this._routes.navigate(['/layout'])
+        this._routes.navigate(['/layout/profile'])
       } else {
         alert ("Email or Password is invalid, Please try again");
 
@@ -150,6 +151,9 @@ getRegisterErrorMessage(x: any) {
       } else
       if (this.registerForm.get('userPassword').hasError('minlength')){
         return this.registerForm.get('userPassword').hasError('minlength') ? 'Password short (8 or more characters)' : '';
+      }else
+      if(this.registerForm.get('userPassword').hasError('pattern')){
+        return 'Please enforce a strong Password, 1 UpperCase/1 LowerCase/1 SpecialCharacter/1 Number/1 ';
       }
     case "confirmPassword":
       if (this.registerForm.get('confirmPassword').hasError('required')) {
