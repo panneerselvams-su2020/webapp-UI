@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validator, AbstractControl, Validators, FormCon
 import { HttpClient } from '@angular/common/http';
 import { isBuffer } from 'util';
 import { AppServiceService } from '../../app-service.service';
-import { Iuser } from 'src/app/interface/IResponse';
+import { Iuser, userResponse } from 'src/app/interface/IResponse';
 //import { UserServiceService } from 'src/app/user-service.service';
 import { MustMatch } from '../../helpers/must-match.validator';
 import { EncryptServiceService } from 'src/app/encrypt-service.service';
@@ -35,10 +35,12 @@ export class ProfileComponent implements OnInit {
     //private userService: UserServiceService,
     private appservice: AppServiceService,
     public dialog: MatDialog) {
-        console.log(this.user)
+        
 
-      this.user=JSON.parse(sessionStorage.getItem("auth"));
+      this.user=JSON.parse(localStorage.getItem("auth"));
+      console.log(this.user)
     this.updateForm = this.fb.group({
+      
       firstName: [this.user.firstName, [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       lastName: [this.user.lastName, [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       email: [this.user.userName]
@@ -110,7 +112,24 @@ export class ProfileComponent implements OnInit {
   }
 
   passwordUpdate(){
-    alert("Inside password update");
+
+    let body= {
+      userName: this.user.userName,
+      oldPassword:btoa(this.updatePasswordForm.get('oldPassword').value),
+      newPassword:btoa(this.updatePasswordForm.get('newPassword').value)
+    }
+
+        if (this.updatePasswordForm.valid) {
+      this.appservice.put<userResponse>('US-UUPD', body).subscribe(y => {
+        //this.userService.reloadUser(y);
+        if(y!=null){
+        alert("Details have been updated successfully")
+        }else{
+          alert("Please check your old password!")
+        }
+      });
+      this.btnDisabled = true;
+    }
   }
 
   // updateUserPassword() {

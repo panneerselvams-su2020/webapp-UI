@@ -36,7 +36,7 @@
     </div>
 </form>
 
-<form [formGroup]="updatePasswordForm" *ngIf="switch == true" fxLayout="column" class="flexColumn" (ngSubmit)="updateUserPassword()">
+<form [formGroup]="updatePasswordForm" *ngIf="switch == true" fxLayout="column" class="flexColumn" (ngSubmit)="passwordUpdate()">
     <div class=matFormField>
          <!-- First Name form field -->
         <div fxLayout="column" class="formStart">
@@ -63,7 +63,7 @@
                 </mat-form-field>
             </div>
             <div fxLayoutAlign="center" class="button">
-                <button (click)= "passwordUpdate()" mat-button> Submit </button>
+                <button  mat-button> Submit </button>
             </div>
         </div>
     </div>

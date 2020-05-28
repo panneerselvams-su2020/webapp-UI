@@ -11,8 +11,9 @@ export interface Iuser{
 }
 
 
-// export interface userResponse{
-//     userEmail: String;
-//     userPassword: String;
-// }
+export interface userResponse{
+    userName: String;
+    oldPassword: String;
+    newPassword: String;
+}
 
