@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
 
     this.updatePasswordForm = this.fb.group({
       oldPassword: ['', [Validators.required, Validators.minLength(8)]],
-      newPassword: ['', [Validators.required, Validators.minLength(8)]],
+      newPassword: ['', [Validators.required, Validators.minLength(8),Validators.pattern('^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\\D*\\d)[A-Za-z\\d!$%@#£€*?&]{8,}$')]],
       confirmPassword: ['', [Validators.required, Validators.minLength(8)]]
     }, {
       validator: MustMatch('newPassword', 'confirmPassword')
@@ -196,6 +196,9 @@ export class ProfileComponent implements OnInit {
       case "newPassword":
         if (this.updatePasswordForm.get('newPassword').hasError('minlength')) {
           return this.updatePasswordForm.get('newPassword').hasError('minlength') ? 'Password short (8 or more characters)' : '';
+        }else
+        if(this.updatePasswordForm.get('newPassword').hasError('pattern')){
+          return 'Please enforce a strong Password, 1 UpperCase/1 LowerCase/1 SpecialCharacter/1 Number/1 ';
         }
       case "confirmPassword":
         if (this.updatePasswordForm.get('confirmPassword').hasError('mustMatch')) {
