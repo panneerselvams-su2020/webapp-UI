@@ -17,6 +17,8 @@ import { BuyComponent } from './buy/buy.component';
 import { SellComponent } from './sell/sell.component';
 import { CartComponent } from './cart/cart.component';
 import { BookUpdateComponent } from './book-update/book-update.component';
+import { APIInterceptorService } from '../app-service.service';
+import { EncryptServiceService } from '../encrypt-service.service';
 
 
 // importing all the required modules for the application
@@ -29,6 +31,7 @@ import { BookUpdateComponent } from './book-update/book-update.component';
     CommonModule, MaterialModule,LayoutRoutingModule,ReactiveFormsModule,
     FlexLayoutModule.withConfig({useColumnBasisZero: false}), HttpClientModule,FormsModule
   ],
-  providers: [AppServiceService]
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: APIInterceptorService, multi: true },
+    AppServiceService, EncryptServiceService],
 })
 export class LayoutModule { }

@@ -18,8 +18,6 @@ export const environment = {
 {code:"US-UB", url:"updateBook"},
 {code:"US-DB", url:"deleteBook"},
 
-
-
 //get list of seller book
 {code:"US-GS", url:"getSellerBooks"},
 {code:"US-GB", url:"getBuyerBooks"},

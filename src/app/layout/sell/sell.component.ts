@@ -24,7 +24,7 @@ export class SellComponent implements OnInit {
   user: Iuser;
   book : IBook;
   createForm: FormGroup;
-  displayedColumns: string[] = ['id','isbn','title','author','price','quantity','pubDate','details'];
+  displayedColumns: string[] = ['id','isbn','title','author','price','bookQuantity','pubDate','details','delete'];
   data: IBook[] = [];
   dataSource: MatTableDataSource<IBook>;  
   delete:boolean;
@@ -41,7 +41,7 @@ export class SellComponent implements OnInit {
         title: ['', [Validators.required]],
         author: ['', [Validators.required]],
         pubDate: ['', [Validators.required]],
-        quantity: ['', [Validators.required,Validators.min(0),Validators.max(999)]],
+        bookQuantity: ['', [Validators.required,Validators.min(0),Validators.max(999)]],
         price: ['', [Validators.required,Validators.min(0.01),Validators.max(9999.99)]]
       });
 
@@ -58,9 +58,8 @@ export class SellComponent implements OnInit {
       
      ngOnInit() {
       this.pageIndex = 1;
-       let body= [];
-       body.push(this.user.userName);
-       this.appservice.get<IBook>('US-GS',body).subscribe((y: any[])=>{
+      
+       this.appservice.get<IBook>('US-GS').subscribe((y: any[])=>{
          if(y!=null){
          this.data = y;
          this.dataSource = new MatTableDataSource(this.data);
@@ -71,7 +70,7 @@ export class SellComponent implements OnInit {
          }else{
            alert ("There was some issue!Please try again");
          }
-       })  
+       }); 
      }
   
   addBook(){
@@ -80,7 +79,7 @@ export class SellComponent implements OnInit {
       title:this.createForm.get('title').value,
       author:this.createForm.get('author').value,
       pubDate:this.createForm.get('pubDate').value,
-      quantity:this.createForm.get('quantity').value,
+      bookQuantity:this.createForm.get('bookQuantity').value,
       price:this.createForm.get('price').value,
       userName:this.user.userName
     }
@@ -91,9 +90,8 @@ export class SellComponent implements OnInit {
         if(y!=null){
         alert("Details have been added successfully");
 
-          let newBody=[];
-          newBody.push(this.user.userName);
-          this.appservice.get<IBook>('US-GS',newBody).subscribe(i =>{
+          
+          this.appservice.get<IBook>('US-GS').subscribe(i =>{
             if(i!=null){
               this.switch=false;
               this.data = i;
@@ -101,6 +99,8 @@ export class SellComponent implements OnInit {
               this.dataSource.paginator= this.paginator;
               this.data.reverse();
               this.dataSource.sort = this.sort;
+              this.rightBtn = "Sell a Book";
+              this.leftBtn="";
             }else{
               alert("Error occured!Please check and try again");
             }
@@ -171,18 +171,18 @@ export class SellComponent implements OnInit {
         if (this.createForm.get('pubDate').hasError('required')) {
           return 'Please provide a date';
         }
-      case "quantity":
-          if (this.createForm.get('quantity').hasError('min')) {
+      case "bookQuantity":
+          if (this.createForm.get('bookQuantity').hasError('min')) {
             return 'Quantity must be greater than 0';
           } else
-          if (this.createForm.get('quantity').hasError('max')) {
+          if (this.createForm.get('bookQuantity').hasError('max')) {
             return 'Quantity must be lesser than 999';
           }
       case "price":
           if (this.createForm.get('price').hasError('min')) {
             return 'Price must be greater than 0.01';
           } else
-          if (this.createForm.get('quantity').hasError('max')) {
+          if (this.createForm.get('price').hasError('max')) {
             return 'Price must be lesser than 9999.99';
           }
 
@@ -204,15 +204,40 @@ export class SellComponent implements OnInit {
     this.router.navigate(['/layout/bookUpdate'],nav)
   }
 
-  deleteBook= (element:object) =>{
+  deleteBook= (element:IBook) =>{
+
+    console.log(element);
+    
+    
     this.delete = confirm("Proceed to delete? This action cannot be undone");
     if(this.delete==true){
-
-      let body=[];
-      body.push(element);
+      let body={
+      isbn:element.isbn,
+      title:element.title,
+      author:element.author,
+      pubDate:element.pubDate,
+      bookQuantity:element.bookQuantity,
+      price:element.price,
+      userName:this.user.userName
+      }
+       
       this.appservice.put<IBook>('US-DB',body).subscribe(y=>{
-        alert("Book delete successful");
-        this.router.navigate(['/layout/sell']);
+        
+        this.appservice.get<IBook>('US-GS').subscribe(i =>{
+          if(i!=null){
+            this.switch=false;
+            this.data = i;
+            this.dataSource= new MatTableDataSource(this.data);
+            this.dataSource.paginator= this.paginator;
+            this.data.reverse();
+            this.dataSource.sort = this.sort;
+            this.rightBtn = "Sell a Book";
+            this.leftBtn="";
+            alert("Book delete successful");
+          }else{
+            alert("Error occured!Please check and try again");
+          }
+        })
       })
     }
   }
