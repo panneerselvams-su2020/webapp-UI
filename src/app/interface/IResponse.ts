@@ -17,3 +17,12 @@ export interface userResponse{
     newPassword: String;
 }
 
+export interface IBook{
+    author: String;
+    title: String;
+    bookQuantity: Number;
+    isbn: String;
+    price: Number;
+    pubDate: Date;
+}
+

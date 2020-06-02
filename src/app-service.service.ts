@@ -34,8 +34,8 @@ export class AppServiceService {
   
   put<T>(url: string, body: any, param?:any[]) : Observable<any> {
    
-    let mie =  localStorage.getItem("jwt_token");
-    let bear = 'Bearer '+ mie
+    let token =  localStorage.getItem("jwt_token");
+    let bear = 'Bearer '+ token
     const httpOptions = {
         headers: new HttpHeaders().set('Authorization', bear)
       };
@@ -46,11 +46,21 @@ export class AppServiceService {
 
   post<T>(url: string, body: any, param?:any[]) : Observable<any>{
     
-    let urlparam = this.geturl(url, param);
-    // generic type of response
-    //let headers = new HttpHeaders().set('Origin','*');
-    //headers.append('Origin','http://localhost:4200');
+    let token =  localStorage.getItem("jwt_token");
+    if(token !=  null){
+      let bear = 'Bearer '+ token;
+      const httpOptions = {
+          headers: new HttpHeaders().set('Authorization', bear)
+        };
+        let urlparam = this.geturl(url, param);
+  
+    return this.http.post<T>(urlparam,body,httpOptions);
+    }
+    else{
+      let urlparam = this.geturl(url, param);
+  
     return this.http.post<T>(urlparam,body);
+    }
   }
 
   getExternal<T>(url): Observable<any>{

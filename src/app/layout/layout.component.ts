@@ -21,11 +21,11 @@ export class LayoutComponent implements OnInit {
   
   ngOnInit(): void {
     //navicons for user
-      this.Nav = [{displayName : 'Profile', route : 'profile', data : 'user'},
+      this.Nav = [{displayName : 'Buy Books', route : 'buy', data : 'user'},
+      {displayName : 'Sell Books', route : 'sell', data : 'user'},
+      {displayName : 'Cart', route : 'cart', data : 'user'},
+      {displayName : 'Profile', route : 'profile', data : 'user'},
     {displayName : 'Logout', route : 'logout'}];
-        
-       
-      
 
     }
      

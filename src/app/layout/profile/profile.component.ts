@@ -171,6 +171,7 @@ export class ProfileComponent implements OnInit {
   }
   //Error handling messages
 
+  
   getUpdateErrorMessage(x: any) {
     switch (x) {
       case "firstName":
