@@ -16,7 +16,7 @@ import { Router, NavigationExtras } from '@angular/router';
 })
 export class SellComponent implements OnInit {
 
-  title: string = "Seller Products";
+  title: string = "Books you Sell";
   leftBtn: String;
   rightBtn: String="Sell a Book";
   switch: boolean = false;
@@ -39,11 +39,11 @@ export class SellComponent implements OnInit {
       this.user=JSON.parse(localStorage.getItem("auth"));
 
       this.createForm = this.fb.group({
-        isbn: ['', [Validators.required,Validators.minLength(13),Validators.maxLength(13)]],
+        isbn: ['', [Validators.required,Validators.minLength(13),Validators.maxLength(13),Validators.pattern('[0-9]*')]],
         title: ['', [Validators.required]],
         author: ['', [Validators.required]],
         pubDate: ['', [Validators.required]],
-        bookQuantity: ['', [Validators.required,Validators.min(0),Validators.max(999)]],
+        bookQuantity: ['', [Validators.required,Validators.min(0),Validators.max(999),Validators.pattern('^[0-9]+$')]],
         price: ['', [Validators.required,Validators.min(0.01),Validators.max(9999.99)]]
       });
 
@@ -75,6 +75,7 @@ export class SellComponent implements OnInit {
        }); 
      }
   
+
   addBook(){
     let body={
       isbn:this.createForm.get('isbn').value,
@@ -110,7 +111,7 @@ export class SellComponent implements OnInit {
             }
           })
         }else{
-          alert("Update unsuccessful! Please prvoide correct inputs and try again!")
+          alert(" The entered ISBN is already been added ! Please update instead")
         }
       });
     }
@@ -144,7 +145,7 @@ export class SellComponent implements OnInit {
     this.switch = true;
     this.leftBtn= "Back";
     this.rightBtn="";
-    this.title="Sell a Book"
+    this.title="Books you Sell"
   }
 
   getUpdateErrorMessage(x: any) {
@@ -226,7 +227,6 @@ export class SellComponent implements OnInit {
             this.data = i;
             this.dataSource= new MatTableDataSource(this.data);
             this.dataSource.paginator= this.paginator;
-            this.data.reverse();
             this.dataSource.sort = this.sort;
             this.rightBtn = "Sell a Book";
             this.leftBtn="";

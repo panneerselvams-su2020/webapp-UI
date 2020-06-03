@@ -44,6 +44,15 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Price per book</th>
         <td mat-cell *matCellDef="let row">{{row.price}}</td>
       </ng-container>
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Availablity Status</th>
+        <td mat-cell *matCellDef="let row">
+            <!-- <span *ngIf="row.bookQuantity = '0'"> Low In Stock </span> -->
+            <span *ngIf="row.bookQuantity &lt; '10'" style="color: red;"> Less than 10 units</span>
+            <span *ngIf="row.bookQuantity &gt; '10'"> Available </span>
+        </td>
+      </ng-container>
 
     <ng-container
      matColumnDef="addToCart">

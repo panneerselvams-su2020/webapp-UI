@@ -33,7 +33,7 @@ export class BookUpdateComponent implements OnInit {
         title: [this.res.title, [Validators.required]],
         author: [this.res.author, [Validators.required]],
         pubDate: [this.res.pubDate, [Validators.required]],
-        bookQuantity: [this.res.bookQuantity, [Validators.required,Validators.min(0),Validators.max(999)]],
+        bookQuantity: [this.res.bookQuantity, [Validators.required,Validators.min(0),Validators.max(999),Validators.pattern('^[0-9]+$')]],
         price: [this.res.price, [Validators.required,Validators.min(0.01),Validators.max(9999.99)]]
       });
 

@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-cart',
@@ -19,9 +20,9 @@ export class CartComponent implements OnInit {
   leftBtn: String;
   rightBtn: String="Buy More";
   user: Iuser;
-  book : IBook;
+  cart:ICart;
   createForm: FormGroup;
-  displayedColumns: string[] = ['id','isbn','title','author','price','bookQuantity','details','removeFromCart'];
+  displayedColumns: string[] = ['id','isbn','title','author','price','bookQuantity','details','removeFromCart','status'];
   data: ICart[] = [];
   dataSource: MatTableDataSource<ICart>;  
   delete:boolean;
@@ -59,6 +60,85 @@ export class CartComponent implements OnInit {
          }
        });
 
+  }
+
+  editQuantity=(element:ICart)=>{
+    let cart= prompt("Enter new quantity");
+    let parseCart = parseInt(cart);
+    if(cart == null){
+
+    }else 
+    if(Number.isNaN(parseCart) || parseCart<=0 ){
+      alert("Please provide a valid input");
+      this.editQuantity(element);
+
+    }else if(element.book['bookQuantity'] < parseCart){
+      alert("The quantity you entered is not available. Please provide a lesser quantity")
+    }else{
+
+    let body={  
+      cartQuantity: parseCart,
+      userName: this.user.userName,
+      book: element.book
+    }
+    console.log(parseCart);
+    console.log(this.user.userName);
+    console.log(element.book);
+
+    this.appservice.put<ICart>('US-UC',body).subscribe((y: any[])=>{
+      if(y==null){
+        alert("Updated failed!Please check your input and try again!");
+      }else{
+        this.appservice.get<ICart>('US-VC').subscribe((y: any[])=>{
+          if(y!=null){
+          this.data = [];
+          y.forEach(i=>{
+            this.data.push(i);
+          })
+          console.log(this.data)
+          this.dataSource = new MatTableDataSource(this.data);
+          this.dataSource.paginator = this.paginator;  
+          this.dataSource.sort = this.sort;
+          this.title="Cart";
+          this.rightBtn="Buy More"
+          }else{
+            alert ("There was some issue!Please try again");
+          }
+        });
+        alert("Quantity in Cart updated Successfully")
+      }
+    });
+  }
+  }
+
+  removeCart=(element:ICart)=>{
+    this.delete = confirm("Proceed to delete? This action cannot be undone");
+    if(this.delete==true){
+      let body={
+        cartQuantity: element.cartQuantity,
+        userName: this.user.userName,
+        book: element.book
+      }
+       
+      this.appservice.put<ICart>('US-RFC',body).subscribe(y=>{
+        
+        this.appservice.get<ICart>('US-VC').subscribe((y: any[])=>{
+          if(y!=null){
+          this.data = [];
+          y.forEach(i=>{
+            this.data.push(i);
+          })
+          console.log(this.data)
+          this.dataSource = new MatTableDataSource(this.data);
+          this.dataSource.paginator = this.paginator;  
+          this.dataSource.sort = this.sort;  
+          }else{
+            alert ("There was some issue!Please try again");
+          }
+        });
+        alert("Removed from Cart Successfully")
+      })
+    }
   }
 
   loadPage(event){

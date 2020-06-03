@@ -26,7 +26,7 @@ export const environment = {
 {code:"US-ATC", url:"addToCart"},
 {code:"US-UC", url:"updateCart"},
 {code:"US-VC", url:"viewCart"},
-{code:"US-RFC", urk:"removeFromCart"}
+{code:"US-RFC", url:"removeFromCart"}
 
 ]
 };

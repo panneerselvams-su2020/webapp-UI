@@ -24,7 +24,7 @@ export class BuyComponent implements OnInit {
   user: Iuser;
   book : IBook;
   createForm: FormGroup;
-  displayedColumns: string[] = ['id','isbn','title','author','price','pubDate','addToCart'];
+  displayedColumns: string[] = ['id','isbn','title','author','price','pubDate','status','addToCart'];
   data: IBook[] = [];
   dataSource: MatTableDataSource<IBook>;  
   delete:boolean;
@@ -51,8 +51,7 @@ export class BuyComponent implements OnInit {
          if(y!=null){
          this.data = y;
          this.dataSource = new MatTableDataSource(this.data);
-         this.dataSource.paginator = this.paginator;  
-         this.data.reverse();
+         this.dataSource.paginator = this.paginator;
          this.dataSource.sort = this.sort;  
          //  console.log(this.data);
          }else{

@@ -31,12 +31,8 @@ export interface IBook{
 }
 
 export interface ICart{
-    author: String;
-    title: String;
-    bookQuantity: Number;
-    isbn: String;
-    price: Number;
-    pubDate: Date;
+    book: object;
+    userName: String;
     cartQuantity:Number;
 }
 
