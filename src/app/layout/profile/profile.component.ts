@@ -38,12 +38,13 @@ export class ProfileComponent implements OnInit {
         
 
       this.user=JSON.parse(localStorage.getItem("auth"));
+      console.log(this.user)
 
     this.updateForm = this.fb.group({
       
       firstName: [this.user.firstName, [Validators.required, Validators.minLength(2), Validators.maxLength(30),Validators.pattern('.*[a-zA-Z]+.*')]],
       lastName: [this.user.lastName, [Validators.required, Validators.minLength(2), Validators.maxLength(30),Validators.pattern('.*[a-zA-Z]+.*')]],
-      email: [this.user.userName]
+      email: [this.user.userName,[]]
     });
 
     this.updatePasswordForm = this.fb.group({

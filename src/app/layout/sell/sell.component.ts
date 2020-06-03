@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Iuser, IBook } from 'src/app/interface/IResponse';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { AppServiceService } from 'src/app-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { element } from 'protractor';
@@ -57,6 +57,7 @@ export class SellComponent implements OnInit {
    
      @ViewChild(MatPaginator) paginator: MatPaginator;
      @ViewChild(MatSort) sort: MatSort;
+     @ViewChild('formDirective') private formDirective: NgForm;
       
      ngOnInit() {
       this.pageIndex = 1;
@@ -92,6 +93,7 @@ export class SellComponent implements OnInit {
         //this.userService.reloadUser(y);
         if(y!=null){
         alert("Details have been added successfully");
+        this.formDirective.resetForm();
 
           
           this.appservice.get<IBook>('US-GS').subscribe(i =>{

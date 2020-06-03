@@ -3,7 +3,7 @@
 </app-navbar>
 
 
-<form [formGroup]="createForm" *ngIf="switch == true" fxLayout="column" class="flexColumn"
+<form [formGroup]="createForm" *ngIf="switch == true" #formDirective="ngForm" fxLayout="column" class="flexColumn"
     enctype="multipart/form-data" (ngSubmit)=addBook()>
     <div class=matFormField fxFlex=100%> 
          <!-- First Name form field -->

@@ -43,8 +43,8 @@ export class LoginComponent implements OnInit {
   
     this.registerForm = this.formBuilder.group({
     userName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}')]],
-    firstName: ['', Validators.required,Validators.pattern('.*[a-zA-Z]+.*')],
-    lastName: ['', Validators.required,Validators.pattern('.*[a-zA-Z]+.*')],
+    firstName: ['', [Validators.required,Validators.pattern('.*[a-zA-Z]+.*')]],
+    lastName: ['', [Validators.required,Validators.pattern('.*[a-zA-Z]+.*')]],
     userPassword: ['', [Validators.required, Validators.minLength(8),Validators.pattern('^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\\D*\\d)[A-Za-z\\d!$%@#£€*?&]{8,}$')]],
     confirmPassword: ['', Validators.required]
     }, {

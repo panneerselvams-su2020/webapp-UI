@@ -33,6 +33,7 @@ export class BuyComponent implements OnInit {
     private appservice: AppServiceService,
     public dialog: MatDialog, private router: Router) { 
       this.user=JSON.parse(localStorage.getItem("auth"));
+      console.log(this.user);
       
     }
     @Input()
