@@ -60,20 +60,21 @@ export class CartComponent implements OnInit {
          }
        });
 
+       console.log()
+
   }
 
   editQuantity=(element:ICart)=>{
     let cart= prompt("Enter new quantity");
+    if (cart.match('^[0-9]+$')){
     let parseCart = parseInt(cart);
-    if(cart == null){
-
-    }else 
     if(Number.isNaN(parseCart) || parseCart<=0 ){
       alert("Please provide a valid input");
       this.editQuantity(element);
 
     }else if(element.book['bookQuantity'] < parseCart){
-      alert("The quantity you entered is not available. Please provide a lesser quantity")
+      alert("The quantity you entered is not available. Please provide a lesser quantity");
+      this.editQuantity(element);
     }else{
 
     let body={  
@@ -81,9 +82,7 @@ export class CartComponent implements OnInit {
       userName: this.user.userName,
       book: element.book
     }
-    console.log(parseCart);
-    console.log(this.user.userName);
-    console.log(element.book);
+    
 
     this.appservice.put<ICart>('US-UC',body).subscribe((y: any[])=>{
       if(y==null){
@@ -109,6 +108,11 @@ export class CartComponent implements OnInit {
       }
     });
   }
+}else{
+  alert("Please provide a valid input");
+  this.editQuantity(element);
+
+}
   }
 
   removeCart=(element:ICart)=>{

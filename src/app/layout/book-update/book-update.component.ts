@@ -31,10 +31,10 @@ export class BookUpdateComponent implements OnInit {
       this.updateForm = this.fb.group({
         isbn: [this.res.isbn, [Validators.required,Validators.minLength(13),Validators.maxLength(13)]],
         title: [this.res.title, [Validators.required]],
-        author: [this.res.author, [Validators.required]],
+        author: [this.res.author, [Validators.required,Validators.pattern('.*[a-zA-Z]+.*')]],
         pubDate: [this.res.pubDate, [Validators.required]],
         bookQuantity: [this.res.bookQuantity, [Validators.required,Validators.min(0),Validators.max(999),Validators.pattern('^[0-9]+$')]],
-        price: [this.res.price, [Validators.required,Validators.min(0.01),Validators.max(9999.99)]]
+        price: [this.res.price, [Validators.required,Validators.min(0.01),Validators.max(9999.99),Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')]]
       });
 
     }
@@ -100,6 +100,7 @@ export class BookUpdateComponent implements OnInit {
         if(this.updateForm.get('isbn').hasError('maxLength')){
           return this.updateForm.get('isbn').hasError('maxLength') ? 'ISBN should contain only 13 characters' : '';
         }
+        break;
       case "title":
         if (this.updateForm.get('title').hasError('required')) {
           return 'Please provide a valid input';
@@ -107,25 +108,37 @@ export class BookUpdateComponent implements OnInit {
       case "author":
         if (this.updateForm.get('author').hasError('required')) {
           return 'You must enter a value! If there are multiple authors, Please use a comma inbetween each author';
+        }else
+        if(this.updateForm.get('author').hasError('pattern')){
+          return 'Input should contain atleast one alphabet'
         }
+        break;
       case "pubDate":
         if (this.updateForm.get('pubDate').hasError('required')) {
           return 'Please provide a date';
         }
+        break;
       case "bookQuantity":
           if (this.updateForm.get('bookQuantity').hasError('min')) {
             return 'Quantity must be greater than 0';
           } else
           if (this.updateForm.get('quantity').hasError('max')) {
             return 'Quantity must be lesser than 999';
+          }else
+          if(this.updateForm.get('bookQuantity').hasError('pattern')){
+            return 'Please enter only in integers';
           }
+          break;
       case "price":
           if (this.updateForm.get('price').hasError('min')) {
             return 'Price must be greater than 0.01';
           } else
           if (this.updateForm.get('quantity').hasError('max')) {
             return 'Price must be lesser than 9999.99';
+          }else if(this.updateForm.get('price').hasError('pattern')){
+            return 'Please provide correct input in price format';
           }
+          break;
 
     }
   }

@@ -41,10 +41,10 @@ export class SellComponent implements OnInit {
       this.createForm = this.fb.group({
         isbn: ['', [Validators.required,Validators.minLength(13),Validators.maxLength(13),Validators.pattern('[0-9]*')]],
         title: ['', [Validators.required]],
-        author: ['', [Validators.required]],
+        author: ['', [Validators.required,Validators.pattern('.*[a-zA-Z]+.*')]],
         pubDate: ['', [Validators.required]],
         bookQuantity: ['', [Validators.required,Validators.min(0),Validators.max(999),Validators.pattern('^[0-9]+$')]],
-        price: ['', [Validators.required,Validators.min(0.01),Validators.max(9999.99)]]
+        price: ['', [Validators.required,Validators.min(0.01),Validators.max(9999.99),Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')]]
       });
 
      }
@@ -149,10 +149,12 @@ export class SellComponent implements OnInit {
   }
 
   getUpdateErrorMessage(x: any) {
+
     switch (x) {
+      
       case "isbn":
         if (this.createForm.get('isbn').hasError('required')) {
-          return 'Please provide a valid input';
+          return 'Please provide a valid input. FYI- ISBN should contain 13 numbers only';
         }else
         if(this.createForm.get('isbn').hasError('minLength')){
           return this.createForm.get('isbn').hasError('minLength') ? 'ISBN should contain only 13 characters' : '';
@@ -160,32 +162,46 @@ export class SellComponent implements OnInit {
         if(this.createForm.get('isbn').hasError('maxLength')){
           return this.createForm.get('isbn').hasError('maxLength') ? 'ISBN should contain only 13 characters' : '';
         }
+        break; 
       case "title":
         if (this.createForm.get('title').hasError('required')) {
           return 'Please provide a valid input';
         }
+        break;
       case "author":
         if (this.createForm.get('author').hasError('required')) {
-          return 'You must enter a value! If there are multiple authors, Please use a comma inbetween each author';
+          return 'You must enter a value atleast one alphabet! If there are multiple authors, Please use a comma inbetween each author';
+        }else
+        if(this.createForm.get('author').hasError('pattern')){
+          return 'Input should contain atleast one alphabet';
         }
+        break;
       case "pubDate":
         if (this.createForm.get('pubDate').hasError('required')) {
           return 'Please provide a date';
         }
+        break;
       case "bookQuantity":
           if (this.createForm.get('bookQuantity').hasError('min')) {
             return 'Quantity must be greater than 0';
           } else
           if (this.createForm.get('bookQuantity').hasError('max')) {
             return 'Quantity must be lesser than 999';
+          }else
+          if(this.createForm.get('bookQuantity').hasError('pattern')){
+            return 'Please enter only in integers';
           }
+          break;
       case "price":
           if (this.createForm.get('price').hasError('min')) {
             return 'Price must be greater than 0.01';
           } else
           if (this.createForm.get('price').hasError('max')) {
             return 'Price must be lesser than 9999.99';
+          }else if(this.createForm.get('price').hasError('pattern')){
+            return 'Please provide correct input in price format';
           }
+          break;
 
     }
   }

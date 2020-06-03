@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit {
     this.submitted=false;
   
     this.registerForm = this.formBuilder.group({
-    userName: ['', [Validators.required, Validators.email]],
-    firstName: ['', Validators.required],
-    lastName: ['', Validators.required],
+    userName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}')]],
+    firstName: ['', Validators.required,Validators.pattern('.*[a-zA-Z]+.*')],
+    lastName: ['', Validators.required,Validators.pattern('.*[a-zA-Z]+.*')],
     userPassword: ['', [Validators.required, Validators.minLength(8),Validators.pattern('^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\\D*\\d)[A-Za-z\\d!$%@#£€*?&]{8,}$')]],
     confirmPassword: ['', Validators.required]
     }, {
@@ -133,18 +133,26 @@ getRegisterErrorMessage(x: any) {
     case "firstName":
       if (this.registerForm.get('firstName').hasError('required')) {
         return 'You must enter a value';
+      }else
+      if(this.registerForm.get('firstName').hasError('pattern')){
+        return 'Input should contain atleast one alphabet';
       }
+      break;
     case "userName":
       if (this.registerForm.get('userName').hasError('required')) {
         return 'You must enter a value';
-      } else if (this.registerForm.get('userName').hasError('email')){
-        return this.registerForm.get('userName').hasError('email') ? 'Not a valid email' : '';
+      } else if (this.registerForm.get('userName').hasError('pattern')){
+        return this.registerForm.get('userName').hasError('pattern') ? 'Not a valid email' : '';
       }
+      break;
     case "lastName":
       if (this.registerForm.get('lastName').hasError('required')) {
         return 'You must enter a value';
+      }else
+      if(this.registerForm.get('lastName').hasError('pattern')){
+        return 'Input should contain atleast one alphabet';
       }
-    
+      break;
     case "userPassword":
       if (this.registerForm.get('userPassword').hasError('required')) {
         return 'You must enter a value';
@@ -155,6 +163,7 @@ getRegisterErrorMessage(x: any) {
       if(this.registerForm.get('userPassword').hasError('pattern')){
         return 'Please enforce a strong Password, 1 UpperCase/1 LowerCase/1 SpecialCharacter/1 Number/1 ';
       }
+      break;
     case "confirmPassword":
       if (this.registerForm.get('confirmPassword').hasError('required')) {
         return 'You must enter a value';
@@ -162,7 +171,7 @@ getRegisterErrorMessage(x: any) {
       if (this.registerForm.get('confirmPassword').hasError('mustMatch')){
         return this.registerForm.get('confirmPassword').hasError('mustMatch') ? 'Passwords don\'t match' : '';
       }
-
+      break;
     }
   }
 
@@ -176,13 +185,16 @@ getRegisterErrorMessage(x: any) {
         } else if (this.loginForm.get('userName').hasError('email')){
           return this.loginForm.get('userName').hasError('email') ? 'Not a valid email' : '';
         }
+        break;
       case "userPassword":
         if (this.loginForm.get('userPassword').hasError('required')) {
           return 'You must enter a value';
         } else if (this.loginForm.get('userPassword').hasError('pattern')){
           return 'Password must contain atleast one number, one special character, one uppercase and one lowercase';
         }
+        break;
       }
+      
     }
 
 }

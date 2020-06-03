@@ -41,8 +41,8 @@ export class ProfileComponent implements OnInit {
 
     this.updateForm = this.fb.group({
       
-      firstName: [this.user.firstName, [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
-      lastName: [this.user.lastName, [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
+      firstName: [this.user.firstName, [Validators.required, Validators.minLength(2), Validators.maxLength(30),Validators.pattern('.*[a-zA-Z]+.*')]],
+      lastName: [this.user.lastName, [Validators.required, Validators.minLength(2), Validators.maxLength(30),Validators.pattern('.*[a-zA-Z]+.*')]],
       email: [this.user.userName]
     });
 
@@ -183,7 +183,11 @@ export class ProfileComponent implements OnInit {
         }
         else if (this.updateForm.get('firstName').hasError('maxLength')) {
           return this.updateForm.get('firstName').hasError('maxLength') ? 'First Name can be only to a max of 30 characters' : '';
+        }else
+        if(this.updateForm.get('firstName').hasError('pattern')){
+          return 'Input should contain atleast one alphabet';
         }
+        break;
       case "lastName":
         if (this.updateForm.get('lastName').hasError('required')) {
           return 'You must enter a value';
@@ -193,7 +197,11 @@ export class ProfileComponent implements OnInit {
         }
         else if (this.updateForm.get('lastName').hasError('maxLength')) {
           return this.updateForm.get('lastName').hasError('maxLength') ? 'Last Name can be only to a max of 30 characters' : '';
+        }else
+        if(this.updateForm.get('lastName').hasError('pattern')){
+          return 'Input should contain atleast one alphabet';
         }
+        break;
       case "newPassword":
         if (this.updatePasswordForm.get('newPassword').hasError('minlength')) {
           return this.updatePasswordForm.get('newPassword').hasError('minlength') ? 'Password short (8 or more characters)' : '';
@@ -201,6 +209,7 @@ export class ProfileComponent implements OnInit {
         if(this.updatePasswordForm.get('newPassword').hasError('pattern')){
           return 'Please enforce a strong Password, 1 UpperCase/1 LowerCase/1 SpecialCharacter/1 Number/1 ';
         }
+        break;
       case "confirmPassword":
         if (this.updatePasswordForm.get('confirmPassword').hasError('mustMatch')) {
           return this.updatePasswordForm.get('confirmPassword').hasError('mustMatch') ? 'Passwords don\'t match' : '';
@@ -209,6 +218,7 @@ export class ProfileComponent implements OnInit {
           if (this.updatePasswordForm.get('newPassword').hasError('minlength')) {
             return this.updatePasswordForm.get('newPassword').hasError('minlength') ? 'Password short (8 or more characters)' : '';
           } 
+          break;
 
     }
   }

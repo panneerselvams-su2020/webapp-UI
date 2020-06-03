@@ -28,6 +28,7 @@ export interface IBook{
     pubDate: Date;
     createdTime: Date;
     updatedTime: Date;
+    isDeleted: boolean;
 }
 
 export interface ICart{

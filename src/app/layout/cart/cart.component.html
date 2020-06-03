@@ -71,10 +71,10 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Current Availablity Status</th>
         <td mat-cell *matCellDef="let row">
             <!-- <span *ngIf="row.bookQuantity = '0'"> Low In Stock </span> -->
-            <span *ngIf="row.book.isDeleted" style="color: red;"> Book removed by Seller </span>
-            <span *ngIf="row.book.bookQuantity == '0'" style="color: red;">Book is out of stock</span>
-            <span *ngIf="row.book.bookQuantity &lt; '10' && row.book.bookQuantity &gt; '0'"> Less than 10 units</span>
-            <span *ngIf="row.book.bookQuantity &gt; '10'"> Available </span>
+            <span *ngIf="row.book.deleted" style="color: red;"> Book removed by Seller </span>
+            <span *ngIf="row.book.bookQuantity == '0' && row.book.deleted==false" style="color: red;">Book is out of stock</span>
+            <span *ngIf="row.book.bookQuantity &lt; '10' && row.book.bookQuantity &gt; '0' && row.book.deleted==false"> Less than 10 units</span>
+            <span *ngIf="row.book.bookQuantity &gt; '10' && row.book.deleted==false"> Available </span>
         </td>
       </ng-container>
   

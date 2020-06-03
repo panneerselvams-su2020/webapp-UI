@@ -63,34 +63,40 @@ export class BuyComponent implements OnInit {
   addToCart= (element:IBook) =>{
 
     let cart= prompt("Quantity you wish to order");
-    let parseCart = parseInt(cart);
-    if(cart == null){
-
-    }else 
-    if(Number.isNaN(parseCart) || parseCart<=0 ){
-      alert("Please provide a valid input");
-      this.addToCart(element);
-
-    }else if(element.bookQuantity< parseCart){
-      alert("The quantity you entered is not available. Please provide a lesser quantity")
-    }else{
-
-    let body={  
-      cartQuantity: parseCart,
-      user: this.user.userName,
-      book: element
-    }
-
-
-    this.appservice.post<ICart>('US-ATC',body).subscribe((y: any[])=>{
-      if(y==null){
-        alert("Book is already present in cart, Please update instead");
-      }else{
-        alert("Book added to Cart Successfully")
+    if (cart.match('^[0-9]+$')){
+      let parseCart = parseInt(cart);
+      if(Number.isNaN(parseCart) || parseCart<=0 ){
+        alert("Please provide a valid input");
+        this.addToCart(element);
+      }else if(element.bookQuantity< parseCart){
+          alert("The quantity you entered is not available. Please provide a lesser quantity");
+          this.addToCart(element);
+        }else{
+    
+        let body={  
+          cartQuantity: parseCart,
+          user: this.user.userName,
+          book: element
+        }
+    
+    
+        this.appservice.post<ICart>('US-ATC',body).subscribe((y: any[])=>{
+          if(y==null){
+            alert("Book is already present in cart, Please update instead");
+          }else{
+            alert("Book added to Cart Successfully")
+          }
+        })
       }
-    })
-  }
-
+    
+  
+      }
+    
+    else {
+      alert("Please enter a valid input");
+      this.addToCart(element);
+    }
+    
   }
 
   loadPage(event){
