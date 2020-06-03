@@ -19,7 +19,7 @@ const routes: Routes = [
         {path: 'buy', component: BuyComponent},
         {path: 'sell', component: SellComponent},
         {path: 'cart', component: CartComponent},
-        {path: 'updateBook', component: BookUpdateComponent}
+        {path: 'bookUpdate', component: BookUpdateComponent}
       ],
     },
  ];

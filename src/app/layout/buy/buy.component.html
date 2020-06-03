@@ -37,7 +37,7 @@
                   Publication Date
                 </th>
                 <td mat-cell *matCellDef="let row">{{row.pubDate | date}}</td>
-              </ng-container>
+            </ng-container>
 
       <!-- Quantity Column -->
       <ng-container matColumnDef="price">
@@ -46,9 +46,9 @@
       </ng-container>
 
     <ng-container
-     matColumnDef="details">
+     matColumnDef="addToCart">
       <th mat-header-cell *matHeaderCellDef>
-        Details
+        Add to Cart
       </th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button [ngStyle]="{'color': 'white'}" (click)="addToCart(element)">

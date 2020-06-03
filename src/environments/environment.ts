@@ -22,6 +22,11 @@ export const environment = {
 {code:"US-GS", url:"getSellerBooks"},
 {code:"US-GB", url:"getBuyerBooks"},
 
+//add to Cart
+{code:"US-ATC", url:"addToCart"},
+{code:"US-UC", url:"updateCart"},
+{code:"US-VC", url:"viewCart"},
+{code:"US-RFC", urk:"removeFromCart"}
 
 ]
 };

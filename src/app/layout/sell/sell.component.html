@@ -103,6 +103,22 @@
         <td mat-cell *matCellDef="let row">{{row.pubDate | date}}</td>
       </ng-container>
 
+      <!-- Created Time -->
+      <ng-container matColumnDef="createdTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Created Time(UTC)
+        </th>
+        <td mat-cell *matCellDef="let row">{{row.createdTime |  date : 'medium' }}</td>
+      </ng-container>
+
+      <!-- Updated Time -->
+      <ng-container matColumnDef="updatedTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Updated Time(UTC)
+        </th>
+        <td mat-cell *matCellDef="let row">{{row.updatedTime |  date : 'medium' }}</td>
+      </ng-container>
+
     <ng-container
      matColumnDef="details">
       <th mat-header-cell *matHeaderCellDef>

@@ -24,10 +24,12 @@ export class SellComponent implements OnInit {
   user: Iuser;
   book : IBook;
   createForm: FormGroup;
-  displayedColumns: string[] = ['id','isbn','title','author','price','bookQuantity','pubDate','details','delete'];
+  displayedColumns: string[] = ['id','isbn','title','author','price','bookQuantity','pubDate','createdTime','updatedTime','details','delete'];
   data: IBook[] = [];
   dataSource: MatTableDataSource<IBook>;  
   delete:boolean;
+  createdTime: Date;
+  upadtedTime: Date;
 
 
 
@@ -101,6 +103,8 @@ export class SellComponent implements OnInit {
               this.dataSource.sort = this.sort;
               this.rightBtn = "Sell a Book";
               this.leftBtn="";
+              this.createdTime=this.book.createdTime;
+              this.upadtedTime=this.book.updatedTime;
             }else{
               alert("Error occured!Please check and try again");
             }
@@ -127,16 +131,13 @@ export class SellComponent implements OnInit {
     }
     if (this.leftBtn == "Back" && x == "left") {
       this.back();
-      return;
     }
   }
 
   back(){
-    this.switch = false;
-    this.leftBtn = "";
-    this.rightBtn = "Sell a Book";
-    this.btnDisabled=false;
-    this.title = "Seller Products"
+    this.switch=false;
+    this.rightBtn="Sell a Book";
+    this.leftBtn="";
   }
 
   sell(){
@@ -144,7 +145,6 @@ export class SellComponent implements OnInit {
     this.leftBtn= "Back";
     this.rightBtn="";
     this.title="Sell a Book"
-
   }
 
   getUpdateErrorMessage(x: any) {
@@ -205,9 +205,6 @@ export class SellComponent implements OnInit {
   }
 
   deleteBook= (element:IBook) =>{
-
-    console.log(element);
-    
     
     this.delete = confirm("Proceed to delete? This action cannot be undone");
     if(this.delete==true){

@@ -1,3 +1,5 @@
+import { Timestamp } from 'rxjs';
+
 export interface IResponse{
     token: any;
     user: Iuser;
@@ -24,5 +26,17 @@ export interface IBook{
     isbn: String;
     price: Number;
     pubDate: Date;
+    createdTime: Date;
+    updatedTime: Date;
+}
+
+export interface ICart{
+    author: String;
+    title: String;
+    bookQuantity: Number;
+    isbn: String;
+    price: Number;
+    pubDate: Date;
+    cartQuantity:Number;
 }
 

@@ -33,7 +33,7 @@ export class BookUpdateComponent implements OnInit {
         title: [this.res.title, [Validators.required]],
         author: [this.res.author, [Validators.required]],
         pubDate: [this.res.pubDate, [Validators.required]],
-        quantity: [this.res.quantity, [Validators.required,Validators.min(0),Validators.max(999)]],
+        bookQuantity: [this.res.bookQuantity, [Validators.required,Validators.min(0),Validators.max(999)]],
         price: [this.res.price, [Validators.required,Validators.min(0.01),Validators.max(9999.99)]]
       });
 
@@ -53,7 +53,7 @@ export class BookUpdateComponent implements OnInit {
       isbn: this.updateForm.get('isbn').value,
       author:this.updateForm.get('author').value,
       pubDate:this.updateForm.get('pubDate').value,
-      quantity:this.updateForm.get('quantity').value,
+      bookQuantity:this.updateForm.get('bookQuantity').value,
       price:this.updateForm.get('price').value,
       userName:this.user.userName
 
@@ -112,8 +112,8 @@ export class BookUpdateComponent implements OnInit {
         if (this.updateForm.get('pubDate').hasError('required')) {
           return 'Please provide a date';
         }
-      case "quantity":
-          if (this.updateForm.get('quantity').hasError('min')) {
+      case "bookQuantity":
+          if (this.updateForm.get('bookQuantity').hasError('min')) {
             return 'Quantity must be greater than 0';
           } else
           if (this.updateForm.get('quantity').hasError('max')) {
