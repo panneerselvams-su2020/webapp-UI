@@ -1,0 +1,56 @@
+<app-navbar [title]="title" [leftBtn]="leftBtn" [rightBtn]="rightBtn"
+    (eventEmit)="outputemitted($event)">
+</app-navbar>
+
+
+<form [formGroup]="updateForm" fxLayout="column" class="flexColumn"
+    enctype="multipart/form-data" (ngSubmit)=updateBook()>
+    <div class=matFormField fxFlex=100%> 
+         <!-- First Name form field -->
+        <div fxLayout="column" class="formStart">
+            <div >
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="text" matInput readonly formControlName="isbn" placeholder="ISBN" required>
+                    <mat-error *ngIf="rf.isbn.invalid">{{getUpdateErrorMessage('isbn')}}</mat-error>
+                </mat-form-field>
+            </div>
+        <!-- Last Name form field -->
+            <div>
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="text" matInput formControlName="title" placeholder="Title" required>
+                    <mat-error *ngIf="rf.title.invalid">{{getUpdateErrorMessage('title')}}</mat-error>
+                </mat-form-field>
+            </div>
+        <!-- Email form field -->
+            <div>
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="text" matInput formControlName="author" placeholder="Authors" required>
+                    <mat-error *ngIf="rf.author.invalid">{{getUpdateErrorMessage('author')}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="number" min="0" max="999" matInput formControlName="bookQuantity" placeholder="Quantity" required>
+                    <mat-error *ngIf="rf.bookQuantity.invalid">{{getUpdateErrorMessage('bookQuantity')}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="number" min="0" max="999" step = "0.01" matInput formControlName="price" placeholder="Price per product" required>
+                    <mat-error *ngIf="rf.price.invalid">{{getUpdateErrorMessage('price')}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayoutAlign="center" class="pubDate">
+                <mat-form-field fxLayoutAlign="center" class="pubForm">
+                    <input type="date" matInput formControlName="pubDate" placeholder="Publication Date">
+                    <mat-error *ngIf="rf.pubDate.invalid">{{getUpdateErrorMessage('pubDate')}}</mat-error>
+                </mat-form-field>
+            </div>
+            <br>
+            <div fxLayoutAlign="center" class="button">
+                <button mat-button> Submit </button>
+            </div>
+            <br><br><br>
+        </div>
+    </div>
+</form>

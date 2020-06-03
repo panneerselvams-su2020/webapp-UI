@@ -12,7 +12,23 @@ export const environment = {
     //update
     {code:"US-UPD",url:"update"},
     //update User Password
-  {code:"US-UUPD",url:"updatePassword"}]
+  {code:"US-UUPD",url:"updatePassword"},
+  //add a Book
+{code:"US-AB", url:"addBook"},
+{code:"US-UB", url:"updateBook"},
+{code:"US-DB", url:"deleteBook"},
+
+//get list of seller book
+{code:"US-GS", url:"getSellerBooks"},
+{code:"US-GB", url:"getBuyerBooks"},
+
+//add to Cart
+{code:"US-ATC", url:"addToCart"},
+{code:"US-UC", url:"updateCart"},
+{code:"US-VC", url:"viewCart"},
+{code:"US-RFC", url:"removeFromCart"}
+
+]
 };
 
 /*

@@ -1,0 +1,88 @@
+<app-navbar [title]="title" [leftBtn]="leftBtn" [rightBtn]="rightBtn"
+    (eventEmit)="outputemitted($event)">
+</app-navbar>
+
+
+
+<div class="example-table-container mat-elevation-z8">
+
+    <table mat-table [dataSource]="dataSource" class="example-table" matSort>
+      <!-- Row Index Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell *matCellDef="let i = index;">{{i+pageIndex}}</td>
+      </ng-container>
+  
+      <!-- ISBN Column -->
+      <ng-container matColumnDef="isbn">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ISBN</th>
+        <td mat-cell *matCellDef="let row">{{row.book.isbn}}</td>
+      </ng-container>
+  
+      <!-- Title Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+        <td mat-cell *matCellDef="let row">{{row.book.title}}</td>
+      </ng-container>
+
+      <!-- Author Column -->
+      <ng-container matColumnDef="author">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Author/s</th>
+        <td mat-cell *matCellDef="let row">{{row.book.author}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Price per book</th>
+        <td mat-cell *matCellDef="let row">{{row.book.price}}</td>
+      </ng-container>
+
+      <!-- Quantity Column -->
+      <ng-container matColumnDef="bookQuantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantity Added to Cart</th>
+        <td mat-cell *matCellDef="let row">{{row.cartQuantity}}</td>
+      </ng-container>
+
+    <ng-container
+     matColumnDef="details">
+      <th mat-header-cell *matHeaderCellDef>
+        Add Cart Quantity 
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button [ngStyle]="{'color': 'white'}" (click)=editQuantity(element)>
+          <mat-icon class="mat-18">playlist_add</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container
+     matColumnDef="removeFromCart">
+      <th mat-header-cell *matHeaderCellDef>
+        Remove from Cart 
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button [ngStyle]="{'color': 'white'}" (click)=removeCart(element)>
+          <mat-icon class="mat-18">remove_shopping_cart</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Current Availablity Status</th>
+        <td mat-cell *matCellDef="let row">
+            <!-- <span *ngIf="row.bookQuantity = '0'"> Low In Stock </span> -->
+            <span *ngIf="row.book.deleted" style="color: red;"> Book removed by Seller </span>
+            <span *ngIf="row.book.bookQuantity == '0' && row.book.deleted==false" style="color: red;">Book is out of stock</span>
+            <span *ngIf="row.book.bookQuantity &lt; '10' && row.book.bookQuantity &gt; '0' && row.book.deleted==false"> Less than 10 units</span>
+            <span *ngIf="row.book.bookQuantity &gt; '10' && row.book.deleted==false"> Available </span>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <!-- Paginator -->
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[15, 25, 50, 100]" (page)= "loadPage($event)">
+    </mat-paginator>
+  </div>
+

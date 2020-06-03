@@ -1,0 +1,154 @@
+<app-navbar [title]="title" [leftBtn]="leftBtn" [rightBtn]="rightBtn" [btnDisabled]="btnDisabled"
+    (eventEmit)="outputemitted($event)">
+</app-navbar>
+
+
+<form [formGroup]="createForm" *ngIf="switch == true" #formDirective="ngForm" fxLayout="column" class="flexColumn"
+    enctype="multipart/form-data" (ngSubmit)=addBook()>
+    <div class=matFormField fxFlex=100%> 
+         <!-- First Name form field -->
+        <div fxLayout="column" class="formStart">
+            <div >
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="text" matInput formControlName="isbn" placeholder="ISBN" required>
+                    <mat-error *ngIf="rf.isbn.invalid">{{getUpdateErrorMessage('isbn')}}</mat-error>
+                </mat-form-field>
+            </div>
+        <!-- Last Name form field -->
+            <div>
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="text" matInput formControlName="title" placeholder="Title" required>
+                    <mat-error *ngIf="rf.title.invalid">{{getUpdateErrorMessage('title')}}</mat-error>
+                </mat-form-field>
+            </div>
+        <!-- Email form field -->
+            <div>
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="text" matInput formControlName="author" placeholder="Authors" required>
+                    <mat-error *ngIf="rf.author.invalid">{{getUpdateErrorMessage('author')}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="number" min="0" max="999" matInput formControlName="bookQuantity" placeholder="Quantity" required>
+                    <mat-error *ngIf="rf.bookQuantity.invalid">{{getUpdateErrorMessage('bookQuantity')}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field fxLayoutAlign="center">
+                    <input type="number" min="0" max="999" step = "0.01" matInput formControlName="price" placeholder="Price per product" required>
+                    <mat-error *ngIf="rf.price.invalid">{{getUpdateErrorMessage('price')}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayoutAlign="center" class="pubDate">
+                <mat-form-field fxLayoutAlign="center" class="pubForm">
+                    <input type="date" matInput formControlName="pubDate" placeholder="Publication Date">
+                    <mat-error *ngIf="rf.pubDate.invalid">{{getUpdateErrorMessage('pubDate')}}</mat-error>
+                </mat-form-field>
+            </div>
+            <br>
+            <div fxLayoutAlign="center" class="button">
+                <button mat-button> Submit </button>
+            </div>
+            <br><br><br>
+        </div>
+    </div>
+</form>
+
+
+<div class="example-table-container mat-elevation-z8" *ngIf="switch == false" >
+
+    <table mat-table [dataSource]="dataSource" class="example-table" matSort>
+      <!-- Row Index Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell *matCellDef="let i = index;">{{i+pageIndex}}</td>
+      </ng-container>
+  
+      <!-- ISBN Column -->
+      <ng-container matColumnDef="isbn">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ISBN</th>
+        <td mat-cell *matCellDef="let row">{{row.isbn}}</td>
+      </ng-container>
+  
+      <!-- Title Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+        <td mat-cell *matCellDef="let row">{{row.title}}</td>
+      </ng-container>
+
+      <!-- Author Column -->
+      <ng-container matColumnDef="author">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Author/s</th>
+        <td mat-cell *matCellDef="let row">{{row.author}}</td>
+      </ng-container>
+
+      <!-- Quantity Column -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Price per book</th>
+        <td mat-cell *matCellDef="let row">{{row.price}}</td>
+      </ng-container>
+
+      <!-- Quantity Column -->
+      <ng-container matColumnDef="bookQuantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantity</th>
+        <td mat-cell *matCellDef="let row">{{row.bookQuantity}}</td>
+      </ng-container>
+
+      <!--  Publication Date Column -->
+      <ng-container matColumnDef="pubDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Publication Date
+        </th>
+        <td mat-cell *matCellDef="let row">{{row.pubDate | date}}</td>
+      </ng-container>
+
+      <!-- Created Time -->
+      <ng-container matColumnDef="createdTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Created Time(UTC)
+        </th>
+        <td mat-cell *matCellDef="let row">{{row.createdTime |  date : 'medium' }}</td>
+      </ng-container>
+
+      <!-- Updated Time -->
+      <ng-container matColumnDef="updatedTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Updated Time(UTC)
+        </th>
+        <td mat-cell *matCellDef="let row">{{row.updatedTime |  date : 'medium' }}</td>
+      </ng-container>
+
+    <ng-container
+     matColumnDef="details">
+      <th mat-header-cell *matHeaderCellDef>
+        Details
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button [ngStyle]="{'color': 'white'}" (click)="updateBook(element)">
+          <mat-icon class="mat-18">reorder</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container
+     matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>
+        Delete Book
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button [ngStyle]="{'color': 'white'}" (click)="deleteBook(element)">
+          <mat-icon class="mat-18">delete_forever</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <!-- Paginator -->
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[15, 25, 50, 100]" (page)= "loadPage($event)">
+    </mat-paginator>
+  </div>
+
