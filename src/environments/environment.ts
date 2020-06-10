@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  "api_url":"http://35.153.78.247:8080/",
+  "api_url":"http://54.82.122.82:8080/",
   "services":[
     //UserAuthentication
     {code:"US-AUT",url:"authenticate"},
