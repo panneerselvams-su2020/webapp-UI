@@ -58,7 +58,7 @@ export class APIInterceptorService implements HttpInterceptor {
        // All HTTP requests are going to go through this method
        let newHeaders = req.headers;
        let t = localStorage.getItem('jwt_token');
-       if (t != null && req.url.includes("localhost")) {
+       if (t != null) {
              req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + t ) });
        }
       return next.handle(req);
