@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { HttpClient, HttpRequest, HttpHandler, HttpEvent} from '@angular/common/http';
 import { HttpInterceptor} from '@angular/common/http';
-
 import {Observable} from 'rxjs';
 import { IResponse } from './interface/IResponse';
 @Injectable()
