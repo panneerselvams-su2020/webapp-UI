@@ -14,6 +14,7 @@ import { APIInterceptorService, AppServiceService } from './app-service.service'
 import { EncryptServiceService } from './encrypt-service.service';
 //import { UserServiceService } from './user-service.service';
 import { LoginComponent } from './login/login.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 //import {EncryptServiceService} from '../app/encrypt-service.service';
 //import { UserServiceService } from './shared/user-service.service';
 
@@ -39,6 +40,7 @@ import { LoginComponent } from './login/login.component';
 
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: APIInterceptorService, multi: true },
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     AppServiceService, EncryptServiceService],
   bootstrap: [AppComponent]
 })
