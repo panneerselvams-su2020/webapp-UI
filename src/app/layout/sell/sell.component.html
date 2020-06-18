@@ -47,6 +47,16 @@
                 </mat-form-field>
             </div>
             <br>
+            <!-- image upload  -->
+          <div fxLayoutAlign="center center">
+            <mat-file-upload (uploadClicked)="onUploadClicked($event)" [acceptedTypes]="'.png, .jpg, .jpeg'" [allowMultipleFiles]="true" [labelText]="'Upload Images :'">
+          </mat-file-upload>
+          </div>
+            <br>
+          <div fxLayoutAlign="center center">
+            <mat-error *ngIf="uploads == true">Incorrect File format</mat-error>
+          </div>
+            <br>
             <div fxLayoutAlign="center" class="button">
                 <button mat-button> Submit </button>
             </div>

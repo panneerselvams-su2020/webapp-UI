@@ -16,6 +16,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material/tabs';
+import { MatFileUploadModule } from 'mat-file-upload';
 
 
 
@@ -37,7 +38,8 @@ const modules = [
     MatDialogModule,
     MatCheckboxModule,
     MatSortModule,
-    MatTabsModule
+    MatTabsModule,
+    MatFileUploadModule
 ];
 
 @NgModule({

@@ -37,3 +37,8 @@ export interface ICart{
     cartQuantity:Number;
 }
 
+export interface Iimage{
+    image: String,
+   name: String
+}
+

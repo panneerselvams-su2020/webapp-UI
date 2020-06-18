@@ -4,7 +4,7 @@
 
 
 <form [formGroup]="updateForm" fxLayout="column" class="flexColumn"
-    enctype="multipart/form-data" (ngSubmit)=updateBook()>
+    enctype="multipart/form-data" (ngSubmit)=updateBook() *ngIf="updateForm && switch == false">
     <div class=matFormField fxFlex=100%> 
          <!-- First Name form field -->
         <div fxLayout="column" class="formStart">
@@ -54,3 +54,42 @@
         </div>
     </div>
 </form>
+
+<!-- div to view images -->
+<div class="container" *ngIf="switch == true">
+    <br><br><br>
+    <div fxLayout="column" *ngFor="let i of rowImages">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px">
+            <div fxFlex="33%" *ngFor="let j of i">
+                <mat-card *ngIf="j.image != undefined">
+                    <img mat-card-image src="{{j.image}}" height="400px" (click)="expand(j.image)">
+                    <button (click)=deleteImage(j)><mat-icon class="mat-18">delete_forever</mat-icon></button>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div fxLayoutAlign="center center">
+        <mat-file-upload (uploadClicked)="onUploadClicked($event)" [acceptedTypes]="'.png, .jpg, .jpeg'" [allowMultipleFiles]="true" [labelText]="'Add more :'">
+      </mat-file-upload>
+      </div>
+        <br>
+      <div fxLayoutAlign="center center">
+        <mat-error *ngIf="uploads == true">Incorrect File format</mat-error>
+      </div>
+      <br>
+            <div fxLayoutAlign="center" class="button">
+                <button mat-button (click)=addMoreImages()> Submit </button>
+            </div>
+            <br><br>
+</div>
+
+<div id="myModal" class="modal">
+    <div class="modal-content" *ngIf="expan == true">
+        <span (click)="spanClick()" class="close" style="color: white;">&times;</span>
+        <div class="center">
+            <img src="{{imag}}" width="500px" height="500px" class="image">
+        </div>
+    </div>
+</div>
+
