@@ -6,6 +6,7 @@ import { BuyComponent } from './buy/buy.component';
 import { SellComponent } from './sell/sell.component';
 import { CartComponent } from './cart/cart.component';
 import { BookUpdateComponent } from './book-update/book-update.component';
+import { BuyerimageComponent } from './buyerimage/buyerimage.component';
 
 
 
@@ -19,7 +20,9 @@ const routes: Routes = [
         {path: 'buy', component: BuyComponent},
         {path: 'sell', component: SellComponent},
         {path: 'cart', component: CartComponent},
-        {path: 'bookUpdate', component: BookUpdateComponent}
+        {path: 'bookUpdate', component: BookUpdateComponent},
+        {path: 'buyerimage',component:BuyerimageComponent}
+
       ],
     },
  ];

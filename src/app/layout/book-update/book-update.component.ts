@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Iuser, IBook } from 'src/app/interface/IResponse';
+import { Iuser, IBook, Iimage } from 'src/app/interface/IResponse';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppServiceService } from 'src/app-service.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -98,6 +98,7 @@ export class BookUpdateComponent implements OnInit {
       this.backtoUpdate();
     }
   }
+
   backtoUpdate(){
     this.switch=false;
     this.rightBtn="View Images";
@@ -231,6 +232,26 @@ export class BookUpdateComponent implements OnInit {
     }
   }
 
+
+deleteImage(x){
+  let a = confirm("Are you sure you want to delete the image? This action cannot be undone")
+  let body = {
+    name: x.name
+  }
+if(a==true){
+  this.appservice.put<Iimage>('US-DI', body).subscribe((res: any) => {
+    if(res!=null){
+      console.log(res);
+     alert("Image deleted Successfully")
+     this.getImages();
+     return;
+    }
+    else
+    alert("Error Occured! Please try again");
+    });
+  }
+
+}
   // method to close the wimage wndow
 close(){
   this.rightBtn = "";
@@ -253,6 +274,38 @@ onUploadClicked(x){
   }
  }
 
+ addMoreImages(){
+  let body={
+    book:{
+      isbn:this.res.isbn,
+      title:this.res.title,
+      author:this.res.authors,
+      pubDate:this.res.pubDate,
+      bookQuantity:this.res.bookQuantity,
+      price:this.res.price,
+      userName:this.user.userName
+  },
+    image:this.fileUpload
+  }
+  
+  console.log(body)
+
+  
+    this.appservice.put<IBook>('US-UI', body).subscribe(y => {
+      //this.userService.reloadUser(y);
+      if(y!=null){
+      alert("Image/s added successfully");
+      this.fileUpload=[];
+      this.getImages();
+      }
+      else{
+        alert("Either the image already exists or some issue occured! Please try again" )
+      }
+      this.getImages();
+    });
+  
+ }
+
  // method to close image with the close image
 spanClick(){
   let modal = document.getElementById("myModal");
@@ -266,4 +319,6 @@ spanClick(){
 //     return;
 //   }
 
+
 }
+

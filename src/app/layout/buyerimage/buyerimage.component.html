@@ -1,0 +1,25 @@
+<app-navbar [title]="title" [leftBtn]="leftBtn" [rightBtn]="rightBtn"
+    (eventEmit)="outputemitted($event)">
+</app-navbar>
+<!-- div to view images -->
+<div class="container" *ngIf="switch == true">
+    <br><br><br>
+    <div fxLayout="column" *ngFor="let i of rowImages">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px">
+            <div fxFlex="33%" *ngFor="let j of i">
+                <mat-card *ngIf="j.image != undefined">
+                    <img mat-card-image src="{{j.image}}" height="400px" (click)="expand(j.image)">
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal">
+    <div class="modal-content" *ngIf="expan == true">
+        <span (click)="spanClick()" class="close" style="color: white;">&times;</span>
+        <div class="center">
+            <img src="{{imag}}" width="500px" height="500px" class="image">
+        </div>
+    </div>
+</div>

@@ -19,13 +19,14 @@ import { CartComponent } from './cart/cart.component';
 import { BookUpdateComponent } from './book-update/book-update.component';
 import { APIInterceptorService } from '../app-service.service';
 import { EncryptServiceService } from '../encrypt-service.service';
+import { BuyerimageComponent } from './buyerimage/buyerimage.component';
 
 
 // importing all the required modules for the application
 
 @NgModule({
 
-  declarations: [LayoutComponent, ProfileComponent, NavbarComponent, BuyComponent, SellComponent, CartComponent, BookUpdateComponent],
+  declarations: [LayoutComponent, ProfileComponent, NavbarComponent, BuyComponent, SellComponent, CartComponent, BookUpdateComponent, BuyerimageComponent],
 
   imports: [
     CommonModule, MaterialModule,LayoutRoutingModule,ReactiveFormsModule,

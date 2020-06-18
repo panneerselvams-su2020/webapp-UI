@@ -24,7 +24,7 @@ export class BuyComponent implements OnInit {
   user: Iuser;
   book : IBook;
   createForm: FormGroup;
-  displayedColumns: string[] = ['id','isbn','title','author','price','pubDate','status','addToCart'];
+  displayedColumns: string[] = ['id','isbn','title','author','price','pubDate','images','status','addToCart'];
   data: IBook[] = [];
   dataSource: MatTableDataSource<IBook>;  
   delete:boolean;
@@ -60,6 +60,8 @@ export class BuyComponent implements OnInit {
          }
        }); 
   }
+
+
 
   addToCart= (element:IBook) =>{
 
@@ -117,5 +119,10 @@ export class BuyComponent implements OnInit {
 
   viewCart(){
     this.router.navigate(['/layout/cart']);
+  }
+
+  viewImages= (element:object) =>{
+    const nav: NavigationExtras = {state: { rowData : element}};
+    this.router.navigate(['/layout/buyerimage'],nav)
   }
 }

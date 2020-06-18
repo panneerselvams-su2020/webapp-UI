@@ -30,6 +30,7 @@ export const environment = {
 
 //ViewImage
 {code:"US-VI", url:"viewImage"},
+{code:"US-VIB", url:"viewBuyerImage"},
 {code:"US-UI", url:"updateimg"},
 {code:"US-DI", url:"deleteimg"}
 ]
