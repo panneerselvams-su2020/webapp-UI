@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  "api_url":"http://54.82.122.82:8080/",
+  "api_url":"http://localhost:8080/",
   "services":[
     //UserAuthentication
     {code:"US-AUT",url:"authenticate"},
@@ -26,8 +26,12 @@ export const environment = {
 {code:"US-ATC", url:"addToCart"},
 {code:"US-UC", url:"updateCart"},
 {code:"US-VC", url:"viewCart"},
-{code:"US-RFC", url:"removeFromCart"}
+{code:"US-RFC", url:"removeFromCart"},
 
+//ViewImage
+{code:"US-VI", url:"viewImage"},
+{code:"US-UI", url:"updateimg"},
+{code:"US-DI", url:"deleteimg"}
 ]
 };
 

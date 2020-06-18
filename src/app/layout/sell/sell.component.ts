@@ -29,7 +29,13 @@ export class SellComponent implements OnInit {
   dataSource: MatTableDataSource<IBook>;  
   delete:boolean;
   createdTime: Date;
-  upadtedTime: Date;
+  updatedTime: Date;
+  uploads: boolean = false;
+  expan: boolean = false;
+  fileUpload = [];
+  image : [];
+  imag:any;
+  
 
 
 
@@ -79,14 +85,19 @@ export class SellComponent implements OnInit {
 
   addBook(){
     let body={
-      isbn:this.createForm.get('isbn').value,
-      title:this.createForm.get('title').value,
-      author:this.createForm.get('author').value,
-      pubDate:this.createForm.get('pubDate').value,
-      bookQuantity:this.createForm.get('bookQuantity').value,
-      price:this.createForm.get('price').value,
-      userName:this.user.userName
+      book:{
+        isbn:this.createForm.get('isbn').value,
+        title:this.createForm.get('title').value,
+        author:this.createForm.get('author').value,
+        pubDate:this.createForm.get('pubDate').value,
+        bookQuantity:this.createForm.get('bookQuantity').value,
+        price:this.createForm.get('price').value,
+        userName:this.user.userName
+    },
+      image:this.fileUpload
     }
+    
+    console.log(body)
 
     if (this.createForm.valid) {
       this.appservice.post<IBook>('US-AB', body).subscribe(y => {
@@ -95,7 +106,7 @@ export class SellComponent implements OnInit {
         alert("Details have been added successfully");
         this.formDirective.resetForm();
 
-          
+       // console.log(this.book.createdTime)
           this.appservice.get<IBook>('US-GS').subscribe(i =>{
             if(i!=null){
               this.switch=false;
@@ -106,8 +117,8 @@ export class SellComponent implements OnInit {
               this.dataSource.sort = this.sort;
               this.rightBtn = "Sell a Book";
               this.leftBtn="";
-              this.createdTime=this.book.createdTime;
-              this.upadtedTime=this.book.updatedTime;
+             // this.createdTime=this.book.createdTime;
+              //this.upadtedTime=this.book.updatedTime;
             }else{
               alert("Error occured!Please check and try again");
             }
@@ -224,6 +235,7 @@ export class SellComponent implements OnInit {
   }
 
   deleteBook= (element:IBook) =>{
+
     
     this.delete = confirm("Proceed to delete? This action cannot be undone");
     if(this.delete==true){
@@ -256,5 +268,22 @@ export class SellComponent implements OnInit {
       })
     }
   }
+
+  onUploadClicked(x){
+    for(let i = 0; i < x.length; i++){
+     if(x[i].type == "image/png" || x[i].type == "image/jpg" || x[i].type == "image/jpeg"  ){
+       let reader = new FileReader();
+       reader.readAsDataURL(x[i]);
+       reader.onload= () =>{
+        let u = reader.result as string;
+        this.fileUpload.push(u);
+       }
+     }else{
+       this.uploads = true;
+     }
+    }
+   }
+
+   
 
 }
