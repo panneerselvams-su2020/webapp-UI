@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  "api_url":"http://54.82.122.82:8080/",
+  "api_url":"http://localhost:8080/",
   "services":[
     //UserAuthentication
     {code:"US-AUT",url:"authenticate"},

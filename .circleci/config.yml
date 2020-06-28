@@ -8,32 +8,32 @@ jobs:
     steps:
     - checkout
     - run:
-      name: Install node_modules with npm
-      command: npm install
+        name: Install node_modules with npm
+        command: npm install
     - save_cache:
         key: dependency-cache-{{ checksum "package.json" }}
         paths: 
         - ./node_modules
     - run:
-      name: Install angularcli
-      command: sudo npm install -g @angular/cli@latest > /dev/null
+        name: Install angularcli
+        command: sudo npm install -g @angular/cli@latest > /dev/null
     - run:
         name: Build
         command: |
-          sed -i "s/localhost/${server}/g" src/environments/environment.ts
+          sed -i "s/localhost/${ipaddress}/g" src/environments/environment.ts
           ng build
     - run:
-      name: remove node_modules
-      command: rm -rf node_modules/
+        name: remove node_modules
+        command: rm -rf node_modules/
     - run:
         name: Install aws cli and configure
         command: |
           sudo apt-get update && sudo apt-get install python-pip
           sudo pip install awscli
-          sudo aws --version
+          aws --version
           aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
           aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
-          aws configure set region us-east-1
+          aws configure set region ${AWS_REGION}
           aws configure list
           pwd
           BUILD_COUNTER="${CIRCLE_BUILD_NUM}"
@@ -45,57 +45,54 @@ jobs:
             --deployment-group-name csye6225-webapp-server-deployment \
             --ignore-application-stop-failures \
             --s3-location bucket=${code_deploy_bucket},bundleType=zip,key=${BUILD_COUNTER}_webapp-ui.zip
-
   pr_check:
     working_directory: ~/webapp-UI
     docker:
     - image: circleci/node:13
-    - image: 'cimg/python:3.6'
     steps:
     - checkout
     - run:
-      name: Install node_modules with npm
-      command: npm install
+        name: Install node_modules with npm
+        command: npm install
     - save_cache:
         key: dependency-cache-{{ checksum "package.json" }}
         paths: 
         - ./node_modules
     - run:
-      name: Install angularcli
-      command: sudo npm install -g @angular/cli@latest > /dev/null
+        name: Install angularcli
+        command: sudo npm install -g @angular/cli@latest > /dev/null
     - run:
         name: Build
         command: |
-          sed -i "s/localhost/${server}/g" src/environments/environment.ts
+          sed -i "s/localhost/${ipaddress}/g" src/environments/environment.ts
           ng build
     - run:
-      name: remove node_modules
-      command: rm -rf node_modules/
+        name: remove node_modules
+        command: rm -rf node_modules/
     - run:
         name: Install aws cli and configure
         command: |
           sudo apt-get update && sudo apt-get install python-pip
           sudo pip install awscli
-          sudo aws --version
+          aws --version
           aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
           aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
-          aws configure set region us-east-1
+          aws configure set region ${AWS_REGION}
           aws configure list
           pwd
           BUILD_COUNTER="${CIRCLE_BUILD_NUM}"
           echo "${BUILD_COUNTER}"
           zip -r ${BUILD_COUNTER}_webapp-ui.zip *
-          aws s3 cp ${BUILD_COUNTER}_webapp-ui.zip s3://${code_deploy_bucket} --region ${aws_region}
+          aws s3 cp ${BUILD_COUNTER}_webapp-ui.zip s3://${code_deploy_bucket} --region ${AWS_REGION}
           aws deploy create-deployment --application-name csye6225-webapp \
             --deployment-config-name CodeDeployDefault.OneAtATime \
-            --deployment-group-name csye6225-webapp-server-deployment \
+            --deployment-group-name csye6225-webapp-deployment \
             --ignore-application-stop-failures \
             --s3-location bucket=${code_deploy_bucket},bundleType=zip,key=${BUILD_COUNTER}_webapp-ui.zip
     environment:
 workflows:
   version: 2
-  pr-check:
-    
+  pr-check: 
     jobs:
     - pr_check
   build_deploy:
@@ -105,3 +102,4 @@ workflows:
             branches:
               only:  
                 - master
+
