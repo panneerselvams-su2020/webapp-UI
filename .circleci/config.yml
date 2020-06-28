@@ -64,7 +64,7 @@ jobs:
     - run:
         name: Build
         command: |
-          sed -i "s/localhost/${server}/g" src/environments/environment.ts
+          sed -i "s/localhost/${ipaddress}/g" src/environments/environment.ts
           ng build
     - run:
         name: remove node_modules
