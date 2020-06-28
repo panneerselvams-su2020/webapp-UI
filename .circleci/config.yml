@@ -4,7 +4,6 @@ jobs:
     working_directory: ~/webapp-UI
     docker:
     - image: circleci/node:13
-    - image: cimg/python:3.6
     steps:
     - checkout
     - run:
@@ -49,7 +48,6 @@ jobs:
     working_directory: ~/webapp-UI
     docker:
     - image: circleci/node:13
-    - image: 'cimg/python:3.6'
     steps:
     - checkout
     - run:
@@ -84,7 +82,7 @@ jobs:
           BUILD_COUNTER="${CIRCLE_BUILD_NUM}"
           echo "${BUILD_COUNTER}"
           zip -r ${BUILD_COUNTER}_webapp-ui.zip *
-          aws s3 cp ${BUILD_COUNTER}_webapp-ui.zip s3://${code_deploy_bucket} --region ${aws_region}
+          aws s3 cp ${BUILD_COUNTER}_webapp-ui.zip s3://${code_deploy_bucket} --region ${AWS_REGION}
           aws deploy create-deployment --application-name csye6225-webapp \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --deployment-group-name csye6225-webapp-server-deployment \
