@@ -4,6 +4,7 @@ jobs:
     working_directory: ~/webapp-UI
     docker:
     - image: circleci/node:13
+    - image: 'cimg/python:3.6'
     steps:
     - checkout
     - run:
@@ -20,7 +21,7 @@ jobs:
         name: Build
         command: |
           sed -i "s/localhost/${ipaddress}/g" src/environments/environment.ts
-          npm run ng build
+          ng build
     - run:
         name: remove node_modules
         command: rm -rf node_modules/
@@ -29,7 +30,7 @@ jobs:
         command: |
           sudo apt-get update && sudo apt-get install python-pip
           sudo pip install awscli
-          sudo aws --version
+          aws --version
           aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
           aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
           aws configure set region ${AWS_REGION}
