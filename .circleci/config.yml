@@ -8,8 +8,8 @@ jobs:
     steps:
     - checkout
     - run:
-      name: Install node_modules with npm
-      command: npm install
+        name: Install node_modules with npm
+        command: npm install
     - save_cache:
         key: dependency-cache-{{ checksum "package.json" }}
         paths: 
@@ -45,7 +45,6 @@ jobs:
             --deployment-group-name csye6225-webapp-server-deployment \
             --ignore-application-stop-failures \
             --s3-location bucket=${code_deploy_bucket},bundleType=zip,key=${BUILD_COUNTER}_webapp-ui.zip
-
   pr_check:
     working_directory: ~/webapp-UI
     docker:
@@ -94,8 +93,7 @@ jobs:
     environment:
 workflows:
   version: 2
-  pr-check:
-    
+  pr-check: 
     jobs:
     - pr_check
   build_deploy:
