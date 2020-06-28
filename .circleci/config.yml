@@ -4,7 +4,7 @@ jobs:
     working_directory: ~/webapp-UI
     docker:
     - image: circleci/node:13
-    - image: 'cimg/python:3.6'
+    - image: cimg/python:3.6
     steps:
     - checkout
     - run:
@@ -75,10 +75,10 @@ jobs:
         command: |
           sudo apt-get update && sudo apt-get install python-pip
           sudo pip install awscli
-          sudo aws --version
+          aws --version
           aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
           aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
-          aws configure set region us-east-1
+          aws configure set region ${AWS_REGION}
           aws configure list
           pwd
           BUILD_COUNTER="${CIRCLE_BUILD_NUM}"
