@@ -53,23 +53,23 @@ jobs:
     steps:
     - checkout
     - run:
-      name: Install node_modules with npm
-      command: npm install
+        name: Install node_modules with npm
+        command: npm install
     - save_cache:
         key: dependency-cache-{{ checksum "package.json" }}
         paths: 
         - ./node_modules
     - run:
-      name: Install angularcli
-      command: sudo npm install -g @angular/cli@latest > /dev/null
+        name: Install angularcli
+        command: sudo npm install -g @angular/cli@latest > /dev/null
     - run:
         name: Build
         command: |
           sed -i "s/localhost/${server}/g" src/environments/environment.ts
           ng build
     - run:
-      name: remove node_modules
-      command: rm -rf node_modules/
+        name: remove node_modules
+        command: rm -rf node_modules/
     - run:
         name: Install aws cli and configure
         command: |
