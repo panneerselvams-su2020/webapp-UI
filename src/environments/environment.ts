@@ -9,6 +9,7 @@ export const environment = {
     //UserAuthentication
     {code:"US-AUT",url:"authenticate"},
     {code:"US-SIGN",url:"signup"},
+    {code:"US-RES",url:"resetPassword"},
     //update
     {code:"US-UPD",url:"update"},
     //update User Password

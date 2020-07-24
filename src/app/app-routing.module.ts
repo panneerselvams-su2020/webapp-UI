@@ -7,6 +7,7 @@ import { LoginguardService } from 'src/login-guard';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent,canActivate:[LoginguardService]},
+  {path: 'passwordReset',component: LoginComponent},
   {path: 'layout', loadChildren: () => LayoutModule, canActivate: [AuthService]},
   {path: 'signUp', component: LoginComponent},
   {path: '**', redirectTo: 'login'}
