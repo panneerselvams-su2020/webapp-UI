@@ -13,6 +13,22 @@
                 <div fxLayoutAlign="center" fxFlex="10%"><button (click)="login()" mat-button>Login</button></div>
             </ng-template>
         </mat-toolbar>
+        <!-- Reset Password Div -->
+        <div class="forgotPassword" *ngSwitchCase="'passwordReset'" fxLayoutAlign="center center">
+            <form [formGroup]="passwordResetForm" (ngSubmit)="changePassword()">
+                <div fxLayoutAlign="center">
+                    <mat-card-title>Reset Password</mat-card-title>
+                </div>
+                <div fxLayoutAlign="center">
+                    <mat-form-field>
+                        <input type="text" formControlName="userName" matInput placeholder="Email ID">
+                        <mat-error *ngIf="rf.userName.invalid">{{getResetPasswordErrorMessage('userName')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                
+                <div fxLayoutAlign="center"><button type="submit" class="button" mat-button>Submit</button></div>
+            </form>
+        </div>
         <!-- Register Div -->
         <div class="register" *ngSwitchCase="'signUp'" fxLayoutAlign="center center">
             <form [formGroup]="registerForm" (ngSubmit)="register()">
@@ -73,6 +89,9 @@
                     </mat-form-field>
                 </div>
                 <div fxLayoutAlign="center"><button type="submit" mat-button>Sign In</button></div>
+                <br>
+                <div fxLayoutAlign="center"><button (click)="forgotPassword()" mat-button>Forgot Password?</button></div>
+
             </form>
         </div>
     </mat-card>

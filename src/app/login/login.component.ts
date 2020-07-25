@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
 
   view: any;
   registerForm:FormGroup;
+  passwordResetForm:FormGroup;
   verificationForm:FormGroup;
   submitted:boolean;
   mail: String;
@@ -51,6 +52,9 @@ export class LoginComponent implements OnInit {
     validator: MustMatch('userPassword', 'confirmPassword')
     });
   
+    this. passwordResetForm = this.formBuilder.group({
+      userName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}')]]
+    });
   }
 
   //Authenticate Function For JWT Login
@@ -76,7 +80,28 @@ export class LoginComponent implements OnInit {
   }
 }
 
- 
+forgotPassword(){
+  this._routes.navigate(['/passwordReset']);
+  };
+
+ changePassword(){
+  let body = {
+    username:this.passwordResetForm.get('userName').value
+  }
+  if(this.passwordResetForm.valid){
+    this.appservice.post<Iuser>('US-RES', body).subscribe(y => {
+      if(y!=null){
+      alert("Password Reset link has been sent to your mailId. Please check!");
+      this._routes.navigate(['/login']); 
+    }
+      else{
+        alert("Error occured!Please try again later!")
+      }}
+    )}
+     else{
+      alert("Error occured!Please check the entered inputs!");
+  }
+ }
   //Form Controls Retrieving Function
   get rf() { return this.registerForm.controls; }
   
@@ -98,6 +123,8 @@ export class LoginComponent implements OnInit {
     this._routes.navigate(['/login']);
   }
 
+ 
+
   //Register Function
   register(){
     this.submitted = true;
@@ -107,6 +134,8 @@ export class LoginComponent implements OnInit {
       firstName: this.registerForm.get('firstName').value,
       lastName: this.registerForm.get('lastName').value
     };
+
+
 
     // Register Body Post
     if(this.registerForm.valid){
@@ -191,6 +220,21 @@ getRegisterErrorMessage(x: any) {
           return 'You must enter a value';
         } else if (this.loginForm.get('userPassword').hasError('pattern')){
           return 'Password must contain atleast one number, one special character, one uppercase and one lowercase';
+        }
+        break;
+      }
+      
+    }
+
+  //Error Message For password reset 
+
+  getResetPasswordErrorMessage(x: any) {
+    switch(x) {
+      case "userName":
+        if (this.passwordResetForm.get('userName').hasError('required')) {
+          return 'You must enter a value';
+        } else if (this.passwordResetForm.get('userName').hasError('email')){
+          return this.passwordResetForm.get('userName').hasError('email') ? 'Not a valid email' : '';
         }
         break;
       }
