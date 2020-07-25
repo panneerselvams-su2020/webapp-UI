@@ -86,10 +86,12 @@ forgotPassword(){
 
  changePassword(){
   let body = {
-    username:this.passwordResetForm.get('userName').value
+    userName:this.passwordResetForm.get('userName').value
   }
+
   if(this.passwordResetForm.valid){
-    this.appservice.post<Iuser>('US-RES', body).subscribe(y => {
+
+    this.appservice.post('US-RES', body).subscribe(y => {
       if(y!=null){
       alert("Password Reset link has been sent to your mailId. Please check!");
       this._routes.navigate(['/login']); 
