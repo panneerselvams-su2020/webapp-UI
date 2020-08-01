@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  "api_url": "http://prod.sridharprasadpanneerselvam.me:8080/",
+  "api_url": "https://prod.sridharprasadpanneerselvam.me:8080/",
   "services":[
     //UserAuthentication
     {code:"US-AUT",url:"authenticate"},
